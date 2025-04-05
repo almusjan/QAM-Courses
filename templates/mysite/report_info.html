@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load qam_tags %}
+
+{% block title %}تقرير: {{ report.title }}{% endblock title %}
+
+{% block body %}
+	<div class="md:flex md:items-center md:justify-center">
+        <div class="bg-base-200/20 flex flex-col m-2 p-2 md:flex-row gap-2 md:gap-10 md:m-4 h-screen/90 md:h-[84.4vh] md:w-[60rem]">
+            <div id="report-info" class="grid grid-cols-1 p-4 gap-y-4 md:gap-y-0 md:justify-center md:items-center md:w-[38%]">
+                <div class="ps-4">
+                    <a href="{% report_checker user.is_staff %}" class="inline-flex justify-center items-center link link-hover text-error">
+                    <span class="icon-[tabler--chevron-right]"></span>
+                    الرجوع إلى التقارير
+                </a>
+                </div>
+                <div id="id">
+                    <label for="_id" class="label-text mb-1">رقم التذكرة</label>
+                    <span id="_id" class="font-bold">{{ report.pk }}#</span>
+                </div>
+                <div id="created_at">
+                    <label for="_created_at" class="label-text mb-1">أنشأت في</label>
+                    <span id="_created_at" class="font-bold">{% convert_date report.createdAt %}</span>
+                </div>
+                <div id="updated_at">
+                    <label for="_updated_at" class="label-text mb-1">آخر تحديث في</label>
+                    <span id="_updated_at" class="font-bold">{% convert_date report.updatedAt %}</span>
+                </div>
+                <div id="category">
+                    <label for="_category" class="label-text mb-1">نوع التقرير</label>
+                    <span id="_category" class="font-bold">{{ report.category }}</span>
+                </div>
+                <div id="status">
+                    <label for="_status" class="label-text mb-1">حالة التقرير</label>
+                    {% if user.is_staff %}
+                        <form method="POST" class="inline-flex gap-1">
+                            {% csrf_token %}
+                                {% for field in status_form %}
+                                    {{ field }}
+                                {% endfor %}
+                            <button class="btn btn-primary">تحديث</button>
+                        </form>
+                    {% else %}
+                        <span id="_status" class="badge badge-soft {% report_status_badge report.status %}">{{ report.status }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <hr class="md:hidden border-0 h-px bg-base-300">
+            <div id="content" class="inline-grid grid-cols-1 gap-3 md:inline-block md:gap-0 md:w-full">
+                <div id="content-body">
+                    <div class="px-3 inline-flex flex-col gap-y-1">
+                        <h3 class="font-bold">{{ report.title }}</h3>
+                        <small id="_content">{{ report.content }}</small>
+                    </div>
+                </div>
+                <hr class=" border-0 h-px bg-base-300 md:my-7">
+                <div class="relative h-[70vh]">
+                    <div id="chats-body" class="h-[58vh] overflow-y-auto">
+                        {% for reply in replies %}
+                            <div class="chat {% if user == reply.user%} chat-sender {% else %} chat-receiver {% endif %}">
+                              <div class="chat-header text-base-content">
+                                <time class="text-base-content/50">{{ reply.createdAt.time }}</time>
+                                  	{{ reply.user.username }}
+                              </div>
+                              <div class="chat-bubble">{{ reply.content}}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="absolute bottom-0">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="inline-flex items-end gap-2">
+                                {% for field in reply_form %}
+                                    {{ field }}
+                                {% endfor %}
+                                <button class="btn btn-primary">إرسال</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

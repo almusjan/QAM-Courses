@@ -1,0 +1,39 @@
+<div class="m-3 card group hover:shadow-sm sm:max-w-sm">
+    <figure>
+        <img src="{{ site.cover.url }}" alt="website" class="h-[300px] md:h-[330px] transition-transform duration-500 group-hover:scale-110">
+    </figure>
+    <hr class="border-0 h-px bg-base-300">
+    <div class="card-body">
+        <h5 class="card-title mb-2.5">{{ site.name}}</h5>
+        <p class="mb-6 truncate">
+            {{ site.description }}
+        </p>
+        <div class="inline-flex gap-1">
+            {% split_list site.languages as languages %}
+            {% for language in languages %}
+                <span class="badge rounded-full badge-primary">{{ language }}</span>
+            {% endfor %}
+
+        </div>
+        <div class="card-actions my-2" dir="ltr">
+            <a href="{% url 'site:site_info' site.pk %}" class="btn btn-primary">
+                <span class="icon-[tabler--circle-arrow-up-left] size-5"></span>
+                إنتقل
+            </a>
+        {% if user.is_authenticated %}
+            <button class="fav-btn btn btn-error btn-outline" data-site-id="{{ site.pk }}">
+                <div class="inline-flex gap-1 items-center">
+                    {% check_favorite user site %}
+                    {{ site.favorites }}
+                </div>
+            </button>
+            {% if user.is_superuser %}
+                <a href="#" class="btn btn-secondary btn-outline">
+                    <span class="icon-[tabler--settings]"></span>
+                    تعديل
+                </a>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+</div>

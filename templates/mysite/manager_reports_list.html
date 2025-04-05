@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load qam_tags %}
+
+{% block title %}إدارة التقارير{% endblock title %}
+
+{% block body %}
+    <div class="flex flex-col my-2 h-screen/90 md:h-[84.4vh]">
+        {# Header Section #}
+        <div class="flex flex-col items-center justify-center h-fit">
+            <h2 class="text-xl mb-2 font-medium">إدارة التقارير</h2>
+            <div class="join my-2 w-[85%] md:w-[48rem] lg:w-[60rem]">
+                <input placeholder="إبحث... إضافة منصة دروب" class="input join-item outline-none" type="search">
+                <button class="btn btn-secondary btn-outline join-item">إبحث</button>
+            </div>
+        </div>
+        {# Header Section End #}
+        <div class="hidden md:block self-center mt-3 w-[83vw] overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>رقم التقرير</th>
+                        <th>عنوان التقرير</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>حالة التقرير</th>
+                        <th>آخر تحديث</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                    	<tr>
+                            <td>{{ report.pk }}</td>
+                            <td>
+                                <a href="{% url 'site:report_info' report.pk %}" class="link link-hover text-primary">{{ report.title }}</a>
+                            </td>
+                            <td>{{ report.user_email}}</td>
+                            <td>
+                                <small class="badge badge-soft {% report_status_badge report.status %}">{{ report.status }}</small>
+                            </td>
+                            <td>
+                                {% if report.updatedAt %}
+                                    {% convert_date report.updatedAt %}
+                                {% else %}
+                                    {% convert_date report.createdAt %}
+                                {% endif %} 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="flex flex-col md:hidden">
+            <div class="grid grid-cols-1">
+                {% for report in reports %}
+                	<div class="grid gap-2 border m-3 py-2 px-3">
+                        <a href="{% url 'site:report_info' report.pk %}" class="text-lg link link-hover text-primary">{{ report.title}}</a>
+                        <p>{{ report.user_email }}</p>
+                        <small>رقم التقرير: {{ report.pk }}</small>
+                        <small>
+                            {% if report.updatedAt %}
+                                {% convert_date report.updatedAt %}
+                            {% else %}
+                                {% convert_date report.createdAt %}
+                            {% endif %} 
+                        </small>
+                        <small class="badge badge-soft {% report_status_badge report.status %}">{{ report.status }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+            {# Paginator Section #}
+            <div class="flex items-center self-center gap-x-1">
+                <a href="{% if reports.has_previous %} ?page={{ reports.previous_page_number }} {% endif %}" class="btn btn-text btn-square {% if not reports.has_previous %} disabled {% endif %}">
+                    <span class="icon-[tabler--chevron-right] size-5" aria-label="Previous Button"></span>
+                </a>
+                <div>
+                    <a href="?page={{ reports.number }}">{{ reports.number }}</a>
+                    <span>من</span>
+                    <a href="?page={{ reports.paginator.num_pages }}">{{ reports.paginator.num_pages }}</a>
+                </div>
+                 <a href="{% if reports.has_next %} ?page={{ reports.next_page_number }} {% endif %}" class="btn btn-text btn-square {% if not reports.has_next %} disabled {% endif %}">
+                    <span class="icon-[tabler--chevron-left] size-5" aria-label="Next Button"></span>
+                </a>
+            </div>
+        {# Paginator Section #}
+        </div>
+    </div>
+{% endblock body %}

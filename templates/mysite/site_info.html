@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load qam_tags %}
+
+{% block title %}موقع دروب{% endblock title %}
+
+{% block body %}
+	<div class="flex items-center justify-center">
+        <div id="container" class="bg-base-200/20 m-3 p-3 flex flex-col gap-y-3 xl:w-[65rem]">
+            {# breadcrumb #}
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'site:index' %}"><span class="icon-[tabler--home] size-6"></span>الرئيسية</a></li>
+                    <li class="breadcrumbs-separator"><span class="icon-[tabler--chevron-left]"></span></li>
+                    <li><a href="{% url 'site:sites_list' %}"><span class="icon-[tabler--world-www] size-6"></span>المواقع</a></li>
+                    <li class="breadcrumbs-separator"><span class="icon-[tabler--chevron-left]"></span></li>
+                    <li>{{ site.name }}</li>
+                </ol>
+            </div>
+            <hr class="border-0 h-px bg-base-300">
+            {# site container #}
+            <div id="site_container" class="flex flex-col gap-3 m-2 lg:gap-5">
+                {# site info #}
+                <div id="site_info" class="flex flex-col gap-2 xl:flex-row">
+                    <div id="right-side" class="flex flex-col items-center justify-center gap-3">
+                        <div>
+                            <img src="/uploads/placeholders/no_www.png" alt="WWW">
+                        </div>
+                        <h3 class="text-lg font-bold">{{ site.name }}</h3>
+                        <small class="text-xs">
+                            تم الإضافة في {% convert_date site.addedAt %}
+                        </small>
+                        {% if user.is_authenticated %}
+                            <div class="join">
+                                <button class="btn btn-error btn-outline join-item">
+                                    <div class="inline-flex gap-1 items-center">
+                                        {% check_favorite user site %}
+                                        {{ site.favorites }}
+                                    </div>
+                                </button>
+                                <a href="{{ site.url }}" target="_blank" class="btn btn-primary btn-outline join-item">إذهب إلى الموقع</a>
+                            </div>
+                        {% else %}
+                            <a href="{{ site.url }}" target="_blank" class="btn btn-primary rounded-full btn-outline">إذهب إلى الموقع</a>
+                        {% endif %} 
+                    </div>
+                    <div id="left-side" class="flex flex-col justify-center items-center gap-2 xl:justify-end xl:items-start xl:pb-2">
+                        <h5 class="text-pretty tabs-sm font-medium text-center xl:text-right">
+                            <span class="font-bold label-text">
+                            الوصف:
+                            </span>
+                            {{ site.description }}
+                        </h5>
+                        <div id="languages" class="flex gap-1">
+                            {% split_list site.languages as languages %}
+                            {% for language in languages %}
+                            	<span class="badge rounded-full badge-primary">{{ language }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            <hr class="border-0 h-px bg-base-300">
+                <div class="flex flex-col items-center justify-center">
+                    {% if courses %}
+                    	{# courses container #}
+                        <div id="courses_container" class="grid gap-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                            {% for course in courses %}
+                                {# card #}
+                                <div class="card hover:shadow-sm sm:max-w-sm m-2">
+                                    <div class="card-body flex flex-col gap-2">
+                                        <div class="card-title">
+                                            {{ course.name }}
+                                        </div>
+                                        <div>
+                                            <span class="font-medium">
+                                                بواسطة: {{ course.author }}
+                                            </span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>اللغة: {{ course.language }}</span>
+                                            <span>{{ course.duration }} {{ course.duration_format }}</span>
+                                        </div>
+                                        <div class="inline-flex flex-wrap gap-1">
+                                            {% split_list course.category as categories %}
+                                            {% for category in categories %}
+                                                <span class="badge rounded-full badge-primary">{{ category }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="card-actions" dir="ltr">
+                                            <a href="{{ course.url }}" target="_blank" class="btn btn-primary rounded-full btn-outline btn-block">إذهب إلى الدورة</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {# card end #}
+                            {% endfor %}
+                        </div>
+                        {# Paginator Section #}
+                        {# PC #}
+                            <div class="hidden md:flex items-center gap-x-2">
+                                <a class="btn btn-outline {% if not courses.has_previous %} disabled {% endif %}" href="{% if courses.has_previous %} ?page={{ courses.previous_page_number }} {% endif %}">السابق</a>
+                                <div class="flex items-center gap-x-1">
+                                    {% for page in courses.paginator.page_range %}
+                                        <a class="btn btn-outline btn-square aria-[current='page']:text-border-primary aria-[current='page']:bg-primary/10" href="?page={{ page }}" {% if courses.number == page %} aria-current="page" {% endif %} >{{ page }}</a>
+                                    {% endfor %}
+                                </div>
+                                <a class="btn btn-outline {% if not courses.has_next %} disabled {% endif %}" href="{% if courses.has_next %} ?page={{ courses.next_page_number }} {% endif %}">التالي</a>
+                            </div>
+                        {# PC End #}
+                        {# Phone #}
+                        <div class="flex md:hidden items-center gap-x-1">
+                            <a href="{% if courses.has_previous %} ?page={{ courses.previous_page_number }} {% endif %}" class="btn btn-text btn-square {% if not courses.has_previous %} disabled {% endif %}">
+                                <span class="icon-[tabler--chevron-right] size-5" aria-label="Previous Button"></span>
+                            </a>
+                            <div>
+                                <a href="?page={{ courses.number }}">{{ courses.number }}</a>
+                                <span>من</span>
+                                <a href="?page={{ courses.paginator.num_pages }}">{{ courses.paginator.num_pages }}</a>
+                            </div>
+                             <a href="{% if courses.has_next %} ?page={{ courses.next_page_number }} {% endif %}" class="btn btn-text btn-square {% if not courses.has_next %} disabled {% endif %}">
+                                <span class="icon-[tabler--chevron-left] size-5" aria-label="Next Button"></span>
+                            </a>
+                        </div>
+                        {# phone end #}
+                    {# Paginator Section End #}
+                    {% else %}
+                        <div class="card min-h-60 w-full">
+                          <div class="card-body items-center justify-center">
+                            <span class="icon-[tabler--brand-google-drive] mb-2 size-8"></span>
+                            <span>لا يوجد دورات حاليا</span>
+                          </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

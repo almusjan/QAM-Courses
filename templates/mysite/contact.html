@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}تواصل معنا{% endblock title %}
+
+{% block body %}
+	<div class="flex items-start mb-[2.15rem] justify-center h-screen/90 md:h-[82.3vh]">
+            <div class="card m-4 w-screen md:w-[48rem]">
+                <div class="card-header">
+                    <div class="card-title text-center">
+                       <h2>تواصل معنا</h2>
+                    </div>
+                </div>
+                <hr class="border-0 h-px bg-base-300">
+                <div class="card-body">
+                    <form method="post">
+                        <div class="grid gap-4">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            {% endfor %}
+                        <small style="user-select: none" class="-mt-2 ms-1">في حال كان نوع الرسالة إقتراح, يرجى وضع الرابط مع المحتوى</small>
+{#                            <div id="category">#}
+{#                                <label for="report-category" class="label-text mb-1">نوع الرسالة</label>#}
+{#                                <select id="report-category" class="select">#}
+{#                                  <option value="default" disabled>إختر النوع</option>#}
+{#                                  <option value="bug">مشكلة تقنية</option>#}
+{#                                  <option value="suggestion">إقتراح موقع / دورة</option>#}
+{#                                  <option value="account">مشكلة في الحساب</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div id="title">#}
+{#                                <label for="report-title" class="label-text mb-1">عنوان الرسالة</label>#}
+{#                                <input type="text" placeholder="مشكلة في صفحة...."  id="report-title" class="input">#}
+{#                            </div>#}
+{#                            <div id="email">#}
+{#                                <label for="report-email" class="label-text mb-1">البريد الإلكتروني</label>#}
+{#                                <input type="email" placeholder="index@qam.com"  id="report-email" class="input">#}
+{#                            </div>#}
+{#                            <div id="url">#}
+{#                                <label for="report-url" class="label-text mb-1">الرابط</label>#}
+{#                                <input type="text" placeholder="https://qam-courses.vercel.com"  id="report-url" class="input">#}
+{#                            </div>#}
+{#                            <div id="content">#}
+{#                                <label for="report-content" class="label-text mb-1">المحتوى</label>#}
+{#                                <textarea name="report-content" id="report-content" rows="4" class="textarea"></textarea>#}
+{#                                <small style="user-select: none">في حال كان نوع الرسالة إقتراح, يرجى وضع الرابط مع المحتوى</small>#}
+{#                            </div>#}
+                            <div class="card-actions" dir="ltr">
+                                <button class="btn btn-primary">إرسال</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock body %}

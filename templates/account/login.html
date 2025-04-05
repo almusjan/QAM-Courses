@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}تسجيل الدخول{% endblock title %}
+
+{% block body %}
+	<div class="flex items-start my-14 md:my-10 justify-center md:h-[80.3vh]">
+        <div class="card m-3 w-screen md:w-[48rem]">
+            <div class="card-header">
+                <div class="card-title text-center">
+                    <h2>تسجيل الدخول</h2>
+                </div>
+            </div>
+            <hr class="border-0 h-px bg-base-300">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="grid gap-6">
+                        <div id="username_input">
+                            <label class="label-text" for="id_username">اسم المستخدم:</label>
+                            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                        </div>
+                        <div id="password_input">
+                            <label class="label-text" for="id_password">كلمة المرور:</label>
+                            <input type="password" name="password" autocomplete="current-password" required id="id_password">
+                            <small>
+                                <a href="#" class="link link-hover text-primary mt-2">نسيت كلمة المرور؟</a>
+                            </small>
+                        </div>
+                        <div class="card-actions" dir="ltr">
+                            <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr class="border-0 h-px bg-base-300 mt-4">
+            <div class="card-footer text-lg text-center">
+                ليس لديك حساب؟ <a href="{% url 'account:login' %}" class="link link-hover hover:text-primary">إضغط هنا</a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

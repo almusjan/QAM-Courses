@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@plugin "@iconify/tailwind";
+
+@layer components {
+    form {
+        label{
+            @apply label-text
+        }
+    }
+    input[type='text'], input[type='email'], input[type='password']{
+            @apply input
+        }
+    select {
+        @apply select
+    }
+    textarea {
+        @apply textarea
+    }
+}
