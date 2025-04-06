@@ -1,5 +1,0 @@
-# .nixpacks
-providers = [
-  { apt = ["default-libmysqlclient-dev" "pkg-config"] },  # For Debian/Ubuntu
-  { nix = ["mysql.client"] }                              # For Nix systems
-]
