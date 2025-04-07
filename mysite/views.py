@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 
 
 def index(request):
-    top_sites = Site.objects.all().order_by("favorites")
+    top_sites = Site.objects.all().order_by("-favorites")
 
     paginator = Paginator(top_sites, 8)
     try:
