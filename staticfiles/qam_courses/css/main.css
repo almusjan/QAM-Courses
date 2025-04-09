@@ -8852,6 +8852,10 @@ textarea.is-invalid:focus ~ .textarea-filled-focused,textarea.is-invalid:focus-w
   min-height: 15rem;
 }
 
+.min-h-\[75vh\] {
+  min-height: 75vh;
+}
+
 .\!w-2\.5 {
   width: 0.625rem !important;
 }
@@ -9772,6 +9776,10 @@ textarea.is-invalid:focus ~ .textarea-filled-focused,textarea.is-invalid:focus-w
 
   .md\:h-\[84\.4vh\] {
     height: 84.4vh;
+  }
+
+  .md\:min-h-\[84\.4vh\] {
+    min-height: 84.4vh;
   }
 
   .md\:w-\[38\%\] {

@@ -25,7 +25,12 @@ def index(request):
 
 
 def sites_list(request):
-    sites = Site.objects.all().order_by("addedAt")
+    sites = Site.objects.all().order_by("-addedAt")
+
+    site_name = request.GET.get("site_name")
+
+    if site_name != '' and site_name is not None:
+        sites = sites.filter(name__icontains=site_name)
 
     paginator = Paginator(sites, 12)
     page = request.GET.get('page')
@@ -67,8 +72,15 @@ def site_info(request, site_id):
     return render(request, 'mysite/site_info.html', {"site": site, "courses": courses})
 
 
+@login_required()
 def favorites(request):
     sites = Site.objects.all()
+
+    site_name = request.GET.get("site_name")
+
+    if site_name != '' and site_name is not None:
+        sites = sites.filter(name__icontains=site_name)
+
     favorites = request.user.favorites.all()
     paginator = Paginator(favorites, 12)
     page = request.GET.get('page')

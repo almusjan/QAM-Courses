@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>QAM - {% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'global/css/main.css' %}">
-    {#<link rel="stylesheet" href="{% static 'global/css/build.css' %}">#}
+    <link rel="stylesheet" href="{% static 'qam_courses/css/main.css' %}">
+    {#<link rel="stylesheet" href="{% static 'qam_courses/css/tw-build.css' %}">#}
     <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 </head>
 <body class="bg-base-200/30">
@@ -19,7 +19,7 @@
     
     {% include 'parts/footer.html' %}
 
-    <script src="{% static 'global/js/flyonui.js' %}"></script>
-    <script src="{% static 'global/js/main.js' %}"></script>
+    <script src="{% static 'qam_courses/js/flyonui.js' %}"></script>
+    <script src="{% static 'qam_courses/js/main.js' %}"></script>
 </body>
 </html>

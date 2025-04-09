@@ -1,3 +1,4 @@
+{% load qam_tags %}
 <div class="m-3 card group hover:shadow-sm sm:max-w-sm">
     <figure>
         <img src="{{ site.cover.url }}" alt="website" class="h-[300px] md:h-[330px] transition-transform duration-500 group-hover:scale-110">
@@ -28,7 +29,7 @@
                 </div>
             </button>
             {% if user.is_superuser %}
-                <a href="#" class="btn btn-secondary btn-outline">
+                <a href="/admin-panel/mysite/site/{{ site.pk }}/change/" class="btn btn-secondary btn-outline">
                     <span class="icon-[tabler--settings]"></span>
                     تعديل
                 </a>

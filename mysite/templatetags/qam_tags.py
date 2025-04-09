@@ -10,7 +10,7 @@ register = template.Library()
 @register.simple_tag
 def check_favorite(user, site):
     if user.favorites.filter(site=site).exists():
-        return mark_safe('<span class="icon-[tabler--heart-filled]"></span>')
+        return mark_safe('<span class="icon-[tabler--heart-filled] self-center"></span>')
     else:
         return mark_safe('<span class="icon-[tabler--heart] self-center"></span>')
 

@@ -6,14 +6,14 @@
 {% block title %}المفضلة{% endblock title %}
 
 {% block body %}
-	<div class="flex flex-col my-2 h-screen/90">
+	<div class="flex flex-col my-2 min-h-[75vh] md:min-h-[84.4vh]">
         {# Header Section #}
         <div class="flex flex-col items-center justify-center h-fit">
             <h2 class="text-xl font-medium">المفضلة</h2>
-            <div class="join my-2 w-[85%] md:w-[48rem] lg:w-[60rem]">
-                <input placeholder="إبحث... موقع إثرائي" class="input join-item outline-none" type="search">
-                <button class="btn btn-secondary btn-outline join-item">إبحث</button>
-            </div>
+            <form method="GET" class="join my-2 w-[85%] md:w-[48rem] lg:w-[60rem]">
+                <input placeholder="إبحث... موقع إثرائي" class="input join-item outline-none" type="search" name="site_name">
+                <button type="submit" class="btn btn-secondary btn-outline join-item">إبحث</button>
+            </form>
         </div>
         {# Header Section End #}
         <div class="flex flex-col items-center justify-center md:gap-y-10">
@@ -21,44 +21,8 @@
             <div class=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {% for site in sites %}
                     {# Site Card #}
-                    <div class="m-3 card group hover:shadow-sm sm:max-w-sm {% show_favorite user site %}">
-                        <figure>
-                            <img src="{{ site.cover.url }}" alt="website" class="h-[300px] md:h-[330px] transition-transform duration-500 group-hover:scale-110">
-                        </figure>
-                        <hr class="border-0 h-px bg-base-300">
-                        <div class="card-body">
-                            <h5 class="card-title mb-2.5">{{ site.name}}</h5>
-                            <p class="mb-6 truncate">
-                                {{ site.description }}
-                            </p>
-                            <div class="inline-flex gap-1">
-                                {% split_list site.languages as languages %}
-                                {% for language in languages %}
-                                    <span class="badge rounded-full badge-primary">{{ language }}</span>
-                                {% endfor %}
-
-                            </div>
-                            <div class="card-actions my-2" dir="ltr">
-                                <a href="{% url 'site:site_info' site.pk %}" class="btn btn-primary">
-                                    <span class="icon-[tabler--circle-arrow-up-left] size-5"></span>
-                                    إنتقل
-                                </a>
-                            {% if user.is_authenticated %}
-                                <button class="fav-btn btn btn-error btn-outline" data-site-id="{{ site.pk }}">
-                                    <div class="inline-flex gap-1 items-center">
-                                        <span class="icon-[tabler--heart-filled]"></span>
-                                        {{ site.favorites }}
-                                    </div>
-                                </button>
-                                {% if user.is_superuser %}
-                                    <a href="#" class="btn btn-secondary btn-outline">
-                                        <span class="icon-[tabler--settings]"></span>
-                                        تعديل
-                                    </a>
-                                {% endif %}
-                            {% endif %}
-                            </div>
-                        </div>
+                    <div class="{% show_favorite user site %}">
+                        {% include 'parts/site_card.html' with site=site user=user %}
                     </div>
                     {# Site Card End #}
                 {% endfor %}
