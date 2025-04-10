@@ -155,12 +155,12 @@ USE_TZ = False
 
 
 SECURE_HSTS_SECONDS = 31536000  # 1 year (only enable if you're 100% HTTPS)
-SECURE_HSTS_PRELOAD = True  # Optional: Submit for HSTS preload list
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Protect subdomains
+SECURE_HSTS_PRELOAD = True  # Optional: True to Submit for HSTS preload list
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # True to Protect subdomains
 
-SESSION_COOKIE_SECURE = True  # HTTPS only
-CSRF_COOKIE_SECURE = True  # HTTPS only
-SECURE_SSL_REDIRECT = False  # Let Railway handle HTTPS
+SESSION_COOKIE_SECURE = True  # True HTTPS only
+CSRF_COOKIE_SECURE = True  # True to HTTPS only
+SECURE_SSL_REDIRECT = False  # False to Let Railway handle HTTPS
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Static files (CSS, JavaScript, Images)
@@ -175,6 +175,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_URL = 'account:login'
 LOGIN_REDIRECT_URL = 'site:index'
+
+# Email Service
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

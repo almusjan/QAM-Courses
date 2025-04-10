@@ -1,0 +1,23 @@
+<div dir="rtl" style="display: flex; align-items: center; justify-content: center; background-color: #f3f4f6;">
+    <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px;margin: 20px; font-family: Arial, sans-serif; color: #333;">
+        <div style="margin-bottom: 16px;">
+            <span style="display: block; font-size: 20px; font-weight: bold;">تقرير جديد: {{ report.title }}</span>
+        </div>
+        <hr style="border: none; height: 1px; background-color: #d1d5db; margin: 16px 0;">
+        <div>
+            <div>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 18px;">مرحبا, سيد قصي</li>
+                    <li style="margin-bottom: 18px;">قام {{ report.user.username }} بإرسال تقرير على موقع QAM Courses:</li>
+                    <li style="margin-bottom: 18px;">
+                        <a href="{{ protocol }}://{{ domain }}{% url 'site:report_info' report_id=report.pk %}"
+                           style="color: #3b82f6; text-decoration: none;">
+                            إضغط هنا للذهاب إلى التقرير
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 18px;">فريق QAM Courses.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

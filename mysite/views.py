@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ReportForm, ReportReplyForm, UpdateReportStatusForm
 from .models import Site, Course, Report, ReportReply
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import render_to_string
 # Create your views here.
 
 
@@ -52,7 +54,18 @@ def contact(request):
 
     if form.is_valid():
         form.save()
-        return redirect('site:index')
+        # Send Email logic
+        context = {
+            "report": form.instance,
+            "domain": request.get_host(),
+            "protocol": "https" if request.is_secure() else "http",
+        }
+        html_message = render_to_string('mysite/contact_email.html', context)
+        msg = EmailMultiAlternatives(f"تقرير جديد: {form.instance.pk}", html_message, settings.DEFAULT_FROM_EMAIL, ['wildkeeper99@gmail.com'])
+        msg.attach_alternative(html_message, "text/html")
+        msg.send()
+
+        return redirect('site:report_info', report_id=form.instance.pk)
 
     return render(request, 'mysite/contact.html', {"form": form})
 

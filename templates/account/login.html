@@ -3,7 +3,7 @@
 {% block title %}تسجيل الدخول{% endblock title %}
 
 {% block body %}
-	<div class="flex items-start my-14 md:my-10 justify-center md:h-[80.3vh]">
+	<div class="flex items-start my-14 md:my-10 justify-center md:h-[78vh]">
         <div class="card m-3 w-screen md:w-[48rem]">
             <div class="card-header">
                 <div class="card-title text-center">
@@ -18,12 +18,15 @@
                         <div id="username_input">
                             <label class="label-text" for="id_username">اسم المستخدم:</label>
                             <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                            {% if form.errors %}
+                            	<small class="text-error">اسم المستخدم او كلمة المرور غير صحيحة</small>
+                            {% endif %} 
                         </div>
                         <div id="password_input">
                             <label class="label-text" for="id_password">كلمة المرور:</label>
                             <input type="password" name="password" autocomplete="current-password" required id="id_password">
                             <small>
-                                <a href="#" class="link link-hover text-primary mt-2">نسيت كلمة المرور؟</a>
+                                <a href="{% url 'account:password_reset' %}" class="link link-hover text-primary mt-2">نسيت كلمة المرور؟</a>
                             </small>
                         </div>
                         <div class="card-actions" dir="ltr">
