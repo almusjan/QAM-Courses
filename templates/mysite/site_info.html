@@ -4,8 +4,8 @@
 {% block title %}موقع دروب{% endblock title %}
 
 {% block body %}
-	<div class="flex items-center justify-center">
-        <div id="container" class="bg-base-200/20 m-3 p-3 flex flex-col gap-y-3 xl:w-[65rem]">
+	<div class="flex items-center justify-center lg:min-h-[86vh]">
+        <div id="container" class="bg-base-200/20 m-3 p-3 flex flex-col gap-y-3 lg:w-[65rem]">
             {# breadcrumb #}
             <div class="breadcrumbs">
                 <ol>
@@ -20,7 +20,7 @@
             {# site container #}
             <div id="site_container" class="flex flex-col gap-3 m-2 lg:gap-5">
                 {# site info #}
-                <div id="site_info" class="flex flex-col gap-2 xl:flex-row">
+                <div id="site_info" class="flex flex-col gap-2 lg:flex-row lg:h-[20rem]">
                     <div id="right-side" class="flex flex-col items-center justify-center gap-3">
                         <div>
                             <img src="{{ site.cover.url }}" alt="WWW">
@@ -43,8 +43,8 @@
                             <a href="{{ site.url }}" target="_blank" class="btn btn-primary rounded-full btn-outline">إذهب إلى الموقع</a>
                         {% endif %} 
                     </div>
-                    <div id="left-side" class="flex flex-col justify-center items-center gap-2 xl:justify-end xl:items-start xl:pb-2">
-                        <h5 class="text-pretty tabs-sm font-medium text-center xl:text-right">
+                    <div id="left-side" class="grow flex flex-col justify-center items-center gap-2 lg:justify-end lg:items-start lg:pb-2">
+                        <h5 class="text-pretty tabs-sm font-medium text-center lg:text-right">
                             <span class="font-bold label-text">
                             الوصف:
                             </span>

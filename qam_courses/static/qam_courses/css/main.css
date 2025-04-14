@@ -8935,6 +8935,10 @@ textarea.is-invalid:focus ~ .textarea-filled-focused,textarea.is-invalid:focus-w
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -9830,20 +9834,104 @@ textarea.is-invalid:focus ~ .textarea-filled-focused,textarea.is-invalid:focus-w
 }
 
 @media (min-width: 1024px) {
+  .lg\:h-\[20rem\] {
+    height: 20rem;
+  }
+
+  .lg\:h-\[\] {
+    height: ;
+  }
+
+  .lg\:h-\[20\] {
+    height: 20;
+  }
+
+  .lg\:h-\[50\] {
+    height: 50;
+  }
+
+  .lg\:h-\[50vh\] {
+    height: 50vh;
+  }
+
+  .lg\:h-\[70vh\] {
+    height: 70vh;
+  }
+
+  .lg\:h-\[8vh\] {
+    height: 8vh;
+  }
+
+  .lg\:h-\[85vh\] {
+    height: 85vh;
+  }
+
+  .lg\:h-\[87vh\] {
+    height: 87vh;
+  }
+
+  .lg\:h-\[86vh\] {
+    height: 86vh;
+  }
+
+  .lg\:min-h-\[86vh\] {
+    min-height: 86vh;
+  }
+
   .lg\:w-\[60rem\] {
     width: 60rem;
+  }
+
+  .lg\:w-\[65rem\] {
+    width: 65rem;
   }
 
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:items-start {
+    align-items: flex-start;
+  }
+
+  .lg\:justify-end {
+    justify-content: flex-end;
+  }
+
   .lg\:gap-5 {
     gap: 1.25rem;
+  }
+
+  .lg\:pb-2 {
+    padding-bottom: 0.5rem;
+  }
+
+  .lg\:text-right {
+    text-align: right;
   }
 }
 
 @media (min-width: 1280px) {
+  .xl\:h-\[40rem\] {
+    height: 40rem;
+  }
+
+  .xl\:h-\[20rem\] {
+    height: 20rem;
+  }
+
+  .xl\:h-\[25rem\] {
+    height: 25rem;
+  }
+
+  .xl\:min-h-\[20rem\] {
+    min-height: 20rem;
+  }
+
   .xl\:w-\[65rem\] {
     width: 65rem;
   }
